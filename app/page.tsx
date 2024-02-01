@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-     <Button size="lg" variant="destructive">
-      Click me
-     </Button>
+    <div>
+      <p>Only authenticated people can see this</p>
+      <p>nextAuth</p>
+    </div>
   );
 }
