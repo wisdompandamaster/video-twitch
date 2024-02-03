@@ -6,6 +6,7 @@ export default function Home() {
     <div>
       <p>Only authenticated people can see this</p>
       <p>nextAuth</p>
+      <p>auth tool</p>
     </div>
   );
 }
