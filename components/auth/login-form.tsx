@@ -33,6 +33,7 @@ export const LoginForm = () => {
 
   const handleOnSubmit = (values: z.infer<typeof LoginSchema>) => {
     console.log(values);
+    login(values);
   };
 
   return (
