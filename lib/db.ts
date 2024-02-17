@@ -7,6 +7,7 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
+// 存在 global 里面，因为它不受 hot reload 影响
 export const db = globalThis.prisma || new PrismaClient();
 
 if (process.env.NODE_ENV !== "production") globalThis.prisma = db;
