@@ -1,6 +1,10 @@
 "use server";
 
+import bcrypt from "bcrypt";
 import * as z from "zod";
+
+import { db } from "@/lib/db";
+
 import { RegisterSchema } from "@/schemas";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
@@ -10,5 +14,31 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: "Invalid Fields!" };
   }
 
-  return { success: "Email sent!" };
+  // 获取验证后的数据
+  const { email, password, name } = validatedFields.data;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // 在数据库中检测这个邮箱是否已经被占用
+  const existingUser = await db.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (existingUser) {
+    return { error: "Email already in use!" };
+  }
+
+  // 没有占用就创建 新用户
+  await db.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+    },
+  });
+
+  // TODO: send verification token email
+
+  return { success: "User created!" };
 };
