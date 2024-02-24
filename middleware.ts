@@ -1,7 +1,10 @@
 /**
  * app protected , a couple of routes to be accessed for non-authorized users
  */
-import { auth } from "./auth";
+import authConfig from "@/auth.config";
+import NextAuth from "next-auth";
+
+const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   // req.auth
